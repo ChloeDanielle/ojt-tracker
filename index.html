@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OJT Hours Tracker - Track Your Journey</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Background Grid Pattern -->
+    <div class="grid-background"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">Tracker by Chloe Gutierrez</span>
+            </div>
+            <div class="nav-actions">
+                <button id="loginBtn" class="btn-secondary">
+                    <span class="google-icon">G</span>
+                    Sign in with Google
+                </button>
+                <button id="logoutBtn" class="btn-secondary" style="display: none;">
+                    Logout
+                </button>
+                <div id="userInfo" class="user-info" style="display: none;">
+                    <img id="userPhoto" src="" alt="User" class="user-avatar">
+                    <span id="userName"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing/Hero Section -->
+    <section id="heroSection" class="hero-section">
+        <div class="hero-content">
+            <!-- Hero Headline -->
+            <h1 class="hero-title">
+                Track Your<br>
+                <span class="gradient-text">OJT Journey</span>
+            </h1>
+
+            <p class="hero-description">
+                The modern way to monitor your On-the-Job Training hours.<br>
+                Seamless tracking, beautiful insights, powered by the cloud.
+            </p>
+
+            <!-- CTA Button -->
+            <button id="ctaLoginBtn" class="btn-primary">
+                <span>Get Started Free</span>
+                <svg class="btn-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <!-- Feature Pills -->
+            <div class="feature-pills">
+                <div class="pill">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M13 5L6 12L3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Cloud Synced
+                </div>
+                <div class="pill">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M13 5L6 12L3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Secure Login
+                </div>
+                <div class="pill">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M13 5L6 12L3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Real-time Updates
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Preview with Image -->
+        <div class="dashboard-preview">
+            <div class="preview-card">
+                <div class="preview-header">
+                    <div class="preview-dot"></div>
+                    <div class="preview-dot"></div>
+                    <div class="preview-dot"></div>
+                </div>
+                <div class="preview-content">
+                    <img src="assets/images/image1.png" alt="Dashboard Preview" class="preview-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main App Section (Hidden until login) -->
+    <main id="appSection" class="app-section" style="display: none;">
+        <div class="app-container">
+            
+            <!-- Progress Card -->
+            <div class="glass-card progress-card">
+                <div class="card-header">
+                    <h2 class="card-title">OJT Progress</h2>
+                    <div class="sync-indicator">
+                        <div class="sync-dot"></div>
+                        <span>Synced</span>
+                    </div>
+                </div>
+
+                <!-- Circular Progress -->
+                <div class="progress-circle-container">
+                    <svg class="progress-ring" width="280" height="280">
+                        <defs>
+                            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#8b5cf6"/>
+                                <stop offset="100%" style="stop-color:#ec4899"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="progress-ring-bg" cx="140" cy="140" r="120" />
+                        <circle id="progressCircle" class="progress-ring-fill" cx="140" cy="140" r="120" />
+                    </svg>
+                    <div class="progress-text">
+                        <div class="progress-percentage" id="progressPercentage">5%</div>
+                        <div class="progress-label">Complete</div>
+                    </div>
+                </div>
+
+                <!-- Progress Stats -->
+                <div class="progress-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Hours Completed</span>
+                        <span class="stat-value" id="completedHours">24</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-label">Hours Required</span>
+                        <span class="stat-value" id="totalHours">486</span>
+                    </div>
+                </div>
+
+                <!-- Remaining Hours -->
+                <div class="remaining-hours">
+                    <span>Remaining Hours:</span>
+                    <span class="remaining-value" id="remainingHours">462</span>
+                </div>
+
+                <!-- Total Hours Input -->
+                <div class="input-group">
+                    <label for="totalRequiredHours">Total Required Hours:</label>
+                    <input type="number" id="totalRequiredHours" value="486" min="1" class="glass-input">
+                </div>
+            </div>
+
+            <!-- Time Entry Card -->
+            <div class="glass-card entry-card">
+                <div class="card-header">
+                    <h2 class="card-title">Record Time Entry</h2>
+                </div>
+
+                <form id="timeEntryForm">
+                    <!-- Date Input -->
+                    <div class="input-group">
+                        <label for="entryDate">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M14.25 3H3.75C2.92157 3 2.25 3.67157 2.25 4.5V15C2.25 15.8284 2.92157 16.5 3.75 16.5H14.25C15.0784 16.5 15.75 15.8284 15.75 15V4.5C15.75 3.67157 15.0784 3 14.25 3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M12 1.5V4.5M6 1.5V4.5M2.25 7.5H15.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Date
+                        </label>
+                        <input type="date" id="entryDate" required class="glass-input">
+                    </div>
+
+                    <!-- Morning Shift -->
+                    <div class="time-shift">
+                        <div class="shift-header">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M9 5V9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                            <span>Morning</span>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-input-wrapper">
+                                <label>Time In</label>
+                                <input type="time" id="morningIn" class="glass-input time-input">
+                            </div>
+                            <div class="time-input-wrapper">
+                                <label>Time Out</label>
+                                <input type="time" id="morningOut" class="glass-input time-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Afternoon Shift -->
+                    <div class="time-shift">
+                        <div class="shift-header">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M9 5V9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                            <span>Afternoon</span>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-input-wrapper">
+                                <label>Time In</label>
+                                <input type="time" id="afternoonIn" class="glass-input time-input">
+                            </div>
+                            <div class="time-input-wrapper">
+                                <label>Time Out</label>
+                                <input type="time" id="afternoonOut" class="glass-input time-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Evening Shift (Optional) -->
+                    <div class="time-shift">
+                        <div class="shift-header">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M9 5V9L12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                            <span>Evening (Optional)</span>
+                        </div>
+                        <div class="time-inputs">
+                            <div class="time-input-wrapper">
+                                <label>Time In</label>
+                                <input type="time" id="eveningIn" class="glass-input time-input">
+                            </div>
+                            <div class="time-input-wrapper">
+                                <label>Time Out</label>
+                                <input type="time" id="eveningOut" class="glass-input time-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-primary submit-btn">
+                        <span>Add Time Entry</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Time Entry History -->
+            <div class="glass-card history-card">
+                <div class="card-header">
+                    <h2 class="card-title">Time Entry History</h2>
+                    <div class="total-hours-badge">
+                        Total: <span id="historyTotalHours">0</span>h
+                    </div>
+                </div>
+                <div id="historyList" class="history-list">
+                    <!-- Entries will be populated here -->
+                    <div class="empty-state">
+                        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                            <circle cx="32" cy="32" r="30" stroke="url(#emptyGradient)" stroke-width="2" opacity="0.3"/>
+                            <path d="M32 20V32L40 40" stroke="url(#emptyGradient)" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="emptyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8b5cf6"/>
+                                    <stop offset="100%" style="stop-color:#ec4899"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <p>No time entries yet</p>
+                        <span>Start tracking your OJT hours above</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Firebase will be initialized here
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        import { getFirestore, collection, addDoc, query, where, getDocs, deleteDoc, doc, updateDoc, orderBy } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+        // Import Firebase config
+        import { firebaseConfig } from './js/firebase-config.js';
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // Make available globally
+        window.firebaseAuth = auth;
+        window.firebaseDb = db;
+        window.googleProvider = provider;
+        window.firebaseModules = {
+            signInWithPopup,
+            signOut,
+            onAuthStateChanged,
+            collection,
+            addDoc,
+            query,
+            where,
+            getDocs,
+            deleteDoc,
+            doc,
+            updateDoc,
+            orderBy
+        };
+    </script>
+
+    <!-- Main App Logic -->
+    <script src="js/app.js"></script>
+</body>
+</html>
