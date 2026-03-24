@@ -1436,8 +1436,67 @@ button, a, input, select, textarea {
     line-height: 1.8;
 }
 
+/* Mobile Controls */
+.tetris-mobile-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 
+        "hold ccw cw"
+        "left down right"
+        "hdrop hdrop hdrop";
+    gap: 12px;
+    margin-top: var(--sp-md);
+    justify-content: center;
+}
+
+.t-btn-ctrl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 245, 255, 0.06);
+    border: 1px solid var(--border-cyan);
+    color: var(--cyan);
+    padding: 16px;
+    border-radius: var(--r-md);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.1);
+    transition: all 0.1s ease;
+}
+
+.t-btn-ctrl:active {
+    background: rgba(0, 245, 255, 0.2);
+    box-shadow: 0 0 15px var(--cyan-glow);
+    transform: scale(0.95);
+}
+
+#tBtnHold { grid-area: hold; }
+#tBtnRotCCW { grid-area: ccw; }
+#tBtnRotCW { grid-area: cw; }
+#tBtnLeft { grid-area: left; }
+#tBtnDown { grid-area: down; }
+#tBtnRight { grid-area: right; }
+#tBtnHardDrop { 
+    grid-area: hdrop; 
+    color: var(--hot-pink); 
+    border-color: var(--border-pink); 
+    background: rgba(255, 45, 120, 0.06); 
+    padding: 18px;
+}
+#tBtnHardDrop:active { 
+    background: rgba(255, 45, 120, 0.2); 
+    box-shadow: 0 0 15px var(--hot-pink-glow); 
+}
+
 /* Responsive: on narrow screens, stack tetris below the left cards */
 @media (max-width: 900px) {
+    .tetris-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .app-container {
         grid-template-columns: 1fr;
         grid-template-areas:

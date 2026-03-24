@@ -375,6 +375,50 @@
             }
 
             const DAS_DELAY=170, ARR=50;
+
+            // Mobile Form Controls
+            const bindMobileBtn = (id, key) => {
+                const btn = document.getElementById(id);
+                if (!btn) return;
+                
+                const start = (e) => {
+                    e.preventDefault();
+                    if (!this.active) activate();
+                    if (!this.held[key]) {
+                        this.held[key] = true;
+                        this.doKey(key);
+                        if (['ArrowLeft','ArrowRight','ArrowDown'].includes(key)) {
+                            this.dasT[key] = setTimeout(()=>{
+                                this.dasI[key] = setInterval(()=>{
+                                    if (this.state==='playing') { this.doKey(key); this.render(); }
+                                }, ARR);
+                            }, DAS_DELAY);
+                        }
+                    }
+                };
+                
+                const end = (e) => {
+                    e.preventDefault();
+                    this.held[key] = false;
+                    clearTimeout(this.dasT[key]);
+                    clearInterval(this.dasI[key]);
+                    delete this.dasT[key]; delete this.dasI[key];
+                };
+
+                btn.addEventListener('touchstart', start, {passive: false});
+                btn.addEventListener('mousedown', start);
+                btn.addEventListener('touchend', end);
+                btn.addEventListener('mouseup', end);
+                btn.addEventListener('mouseleave', end);
+            };
+
+            bindMobileBtn('tBtnLeft', 'ArrowLeft');
+            bindMobileBtn('tBtnRight', 'ArrowRight');
+            bindMobileBtn('tBtnDown', 'ArrowDown'); // Soft drop
+            bindMobileBtn('tBtnHardDrop', ' '); // Space for hard drop
+            bindMobileBtn('tBtnHold', 'c'); // C for Hold
+            bindMobileBtn('tBtnRotCW', 'ArrowUp'); // Rotate Right
+            bindMobileBtn('tBtnRotCCW', 'z'); // Rotate Left
             const GAME_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp', 'a', 'A', 'd', 'D', 's', 'S', 'w', 'W', ' ', 'z', 'Z', 'c', 'C', 'Shift', 'Escape', 'p', 'P'];
 
             document.addEventListener('keydown', e => {
